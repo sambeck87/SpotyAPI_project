@@ -26,17 +26,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extr
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.css */ \"./src/style.css\");\n/* harmony import */ var _img_damian_sastre_jpg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./img/damian_sastre.jpg */ \"./src/img/damian_sastre.jpg\");\n\n\n\n//# sourceURL=webpack://leaderboard-project/./src/index.js?");
-
-/***/ }),
-
-/***/ "./src/img/damian_sastre.jpg":
-/*!***********************************!*\
-  !*** ./src/img/damian_sastre.jpg ***!
-  \***********************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-eval("module.exports = __webpack_require__.p + \"./img/damian_sastre.jpg\";\n\n//# sourceURL=webpack://leaderboard-project/./src/img/damian_sastre.jpg?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.css */ \"./src/style.css\");\n\n\nconst clientId = '106558cb9bed438da1dd5a61c7cf01dd';\nconst clienSecret = 'b4fd420bddfd49b7898748d73902eb20';\n\nconst getToken = async () => {\n  const result = await fetch(\"https://accounts.spotify.com/api/token\", {\n    method: \"POST\",\n    headers: {\n      \"Content-Type\": \"application/x-www-form-urlencoded\",\n      Authorization: \"Basic \" + btoa(clientId + \":\" + clienSecret),\n    },\n    body: \"grant_type=client_credentials\",\n  });\n\n  const data = await result.json();\n  return data.access_token;\n}\n\nconst getData = async (token) => {\n  const result = await fetch('https://api.spotify.com/v1/playlists/2bEVbGRbmxC7pwenhutQJu/tracks', {\n    method: 'GET',\n    headers: { 'Authorization': 'Bearer ' + token }\n  });\n  const data = await result.json();\n  // console.log(data);\n  return data;\n}\n\nconst getList = async (token) => {\n  const result = await fetch('https://api.spotify.com/v1/playlists/27Ry92QJXlch6Vsn6UxsVL/tracks', {\n    method: 'GET',\n    headers: { 'Authorization': 'Bearer ' + token }\n  });\n  const data = await result.json();\n  // console.log(data);\n  return data;\n}\n\nconst callData = async () => {\n  const token = await getToken();\n  getData(token)\n  const list = await getList(token)\nlet tracks =''\n  for (let index = 0; index < 100; index++) {\n    if(list.items[index].track.preview_url){\n        const image = list.items[index].track.album.images[0].url\n        const name = list.items[index].track.name\n        const prev = list.items[index].track.preview_url\n    \n        tracks += `<div class=\"track\"><img class=\"album_image\" src=\"${image}\" alt=\"img_${name}\"> <span>${name}</span> <video controls muted autoplay=\"disable\" name=\"track ${index}\" class=\"reproductor\"><source src=\"${prev}\" type=\"audio/mpeg\"></video></div>`\n    }\n  }\n\n  //console.log(list.items)\n  console.log(list.items)\n\n  document.getElementById('song').innerHTML = `${tracks}`\n}\n\ncallData();\n\n\n//# sourceURL=webpack://leaderboard-project/./src/index.js?");
 
 /***/ })
 
@@ -67,18 +57,6 @@ eval("module.exports = __webpack_require__.p + \"./img/damian_sastre.jpg\";\n\n/
 /******/ 	}
 /******/ 	
 /************************************************************************/
-/******/ 	/* webpack/runtime/global */
-/******/ 	(() => {
-/******/ 		__webpack_require__.g = (function() {
-/******/ 			if (typeof globalThis === 'object') return globalThis;
-/******/ 			try {
-/******/ 				return this || new Function('return this')();
-/******/ 			} catch (e) {
-/******/ 				if (typeof window === 'object') return window;
-/******/ 			}
-/******/ 		})();
-/******/ 	})();
-/******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	(() => {
 /******/ 		// define __esModule on exports
@@ -88,26 +66,6 @@ eval("module.exports = __webpack_require__.p + \"./img/damian_sastre.jpg\";\n\n/
 /******/ 			}
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/publicPath */
-/******/ 	(() => {
-/******/ 		var scriptUrl;
-/******/ 		if (__webpack_require__.g.importScripts) scriptUrl = __webpack_require__.g.location + "";
-/******/ 		var document = __webpack_require__.g.document;
-/******/ 		if (!scriptUrl && document) {
-/******/ 			if (document.currentScript)
-/******/ 				scriptUrl = document.currentScript.src
-/******/ 			if (!scriptUrl) {
-/******/ 				var scripts = document.getElementsByTagName("script");
-/******/ 				if(scripts.length) scriptUrl = scripts[scripts.length - 1].src
-/******/ 			}
-/******/ 		}
-/******/ 		// When supporting browsers where an automatic publicPath is not supported you must specify an output.publicPath manually via configuration
-/******/ 		// or pass an empty string ("") and set the __webpack_public_path__ variable from your code to use your own logic.
-/******/ 		if (!scriptUrl) throw new Error("Automatic publicPath is not supported in this browser");
-/******/ 		scriptUrl = scriptUrl.replace(/#.*$/, "").replace(/\?.*$/, "").replace(/\/[^\/]+$/, "/");
-/******/ 		__webpack_require__.p = scriptUrl;
 /******/ 	})();
 /******/ 	
 /************************************************************************/
