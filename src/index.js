@@ -17,42 +17,43 @@ const getToken = async () => {
   return data.access_token;
 };
 
-const getData = async (token) => {
-  const result = await fetch('https://api.spotify.com/v1/playlists/2bEVbGRbmxC7pwenhutQJu/tracks', {
-    method: 'GET',
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  const data = await result.json();
-  // console.log(data);
-  return data;
-};
-
-const getList = async (token) => {
-  const result = await fetch('https://api.spotify.com/v1/playlists/27Ry92QJXlch6Vsn6UxsVL/tracks', {
-    method: 'GET',
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  const data = await result.json();
-  // console.log(data);
-  return data;
-};
-
-const callData = async () => {
+const getShow = async (link) => {
   const token = await getToken();
-  getData(token);
-  const list = await getList(token);
-  let tracks = '';
-  for (let index = 0; index < 100; index += 1) {
-    if (list.items[index].track.preview_url) {
-      const image = list.items[index].track.album.images[0].url;
-      const { name } = list.items[index].track;
-      const prev = list.items[index].track.preview_url;
+  const toDisplay = !link ? 'https://api.spotify.com/v1/shows/5mriRyXhrPKOll6EKBfdJo/episodes?market=US' : link
+  const result = await fetch(toDisplay, {
+    method: 'GET',
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  const data = await result.json();
+  return data;
+};
 
-      tracks += `<div class="track"><img class="album_image" src="${image}" alt="img_${name}"> <span>${name}</span> <video controls muted autoplay="disable" name="track ${index}" class="reproductor"><source src="${prev}" type="audio/mpeg"></video></div>`;
-    }
+
+const callDataShow = async () => {
+  const token = await getToken();
+  const list = await getShow();
+  const FullList =  () =>{
+    console.log(list.items.next);
   }
+  console.log(list);
+  console.log(list.next)
+  let tracks = '';
+
+  const image = list.items[0].images[0].url;
+  const { name, audio_preview_url } = list.items[0];
+  const link = list.items[0].external_urls.spotify;
+
+  const image2 = list.items[1].images[1].url;
+  const  name2  = list.items[1].name;
+  const prev2 = list.items[1].audio_preview_url;
+  const link2 = list.items[1].external_urls.spotify;
+
+  tracks += `<div class="track"><a href="${link}"><img class="album_image" src="${image}" alt="img_${name}"></a> <span>${name}</span> <video controls muted autoplay="disable" class="reproductor"><source src="${audio_preview_url}" type="audio/mpeg"></video></div>`;
+
+  tracks += `<div class="track"><a href="${link2}"><img class="album_image" src="${image2}" alt="img_${name2}"></a> <span>${name2}</span> <video controls muted autoplay="disable" class="reproductor"><source src="${prev2}" type="audio/mpeg"></video></div>`;
+
 
   document.getElementById('song').innerHTML = `${tracks}`;
 };
 
-callData();
+callDataShow();
