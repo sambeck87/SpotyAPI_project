@@ -1,14 +1,73 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: black;
+}
+
+#general {
+  background-image: url('./img/damian.jpg');
+  background-size: cover;
+  width: 100%;
+  position: absolute;
+}
+
+#navbar {
+  height: 6vw;
+  width: 100%;
+  background-color: rgba(70, 70, 70, 0.7);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  color: white;
+  z-index: 1;
+}
+
+#logo_link {
+width: 5vw;
+}
+
+#logo {
+  margin-left: 2rem;
+  width: 100%;
+}
+
+#list_links {
+  width: 30vw;
+  display: flex;
+  flex-direction: row;
+  font-size: 3vw;
+  justify-content: space-between;
+  list-style: none;
+  margin-right: 2rem;
+}
+
+#my_carrer {
+  width: 75%;
+  margin-top: 150px;
+  font-size: 1.2rem;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
 #song {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-around;
   padding-left: 2.5%;
 }
 
 .track {
   display: flex;
   flex-direction: column;
-  width: 45%;
+  width: 25%;
   margin: 0 2.5% 5vw 0;
   font-size: 1.5vw;
 }
@@ -19,4 +78,8 @@
 
 .album_image{
   width: 100%;
+}
+
+#lasts {
+  margin-top: 15%;
 }
